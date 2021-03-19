@@ -97,6 +97,20 @@ function isVerifiedUser(userID)
     return false;
 }
 
+function isVerifiedStudent(studentID)
+{
+    for(var i = 0; i < studentData.length; i++)
+    {
+        const student = studentData[i];
+        if(student.studentID == studentID)
+        {
+            return (student.userID != "");
+        }
+    }
+
+    return false;
+}
+
 function verifyStudent(studentID, code, userID)
 {
     for(var i = 0; i < studentData.length; i++)
@@ -214,14 +228,21 @@ client.on('message', msg => {
     
                         if(valid)
                         {
-                            if(verifyStudent(studentID, code, msg.author.id))
+                            if(isVerifiedStudent(studentID))
                             {
-                                msg.reply("You have been verified.");
+                                msg.reply("The student `" + studentID + "` has already been verified with another account.");
                             }
                             else
                             {
-                                msg.reply("Invalid code for `" + studentID + "`, please send the student ID once again without any commands to receive your code again. Examples: `b000XXXXX` `g000XXXXX`.");
-                            }    
+                                if(verifyStudent(studentID, code, msg.author.id))
+                                {
+                                    msg.reply("You have been verified.");
+                                }
+                                else
+                                {
+                                    msg.reply("Invalid code for `" + studentID + "`, please send the student ID once again without any commands to receive your code again. Examples: `b000XXXXX` `g000XXXXX`.");
+                                }    
+                            }
                         }
                         else
                         {
@@ -263,38 +284,43 @@ client.on('message', msg => {
 
                     if(valid)
                     {
-                        var added = false;
-                        var code = makeid(6);
-                        for(var i = 0; i < studentData.length; i++)
+                        if(isVerifiedStudent(studentID))
                         {
-                            if(studentData[i].studentID == studentID)
-                            {
-                                added = true;
-                                code = studentData[i].code;
-                            }
-                        }
-
-                        const mailStatus = sendEmail(studentID, code)
-                        
-                        if(!added)
-                        {
-                            studentData.push({studentID: studentID, userID: "", code: code});
-                            saveFile();
-
-                            if(mailStatus)
-                                msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
-                            else
-                                msg.reply("You can only receive an email once every 5 minutes.");
+                            msg.reply("The student `" + studentID + "` has already been verified with another account.");
                         }
                         else
                         {
-                            if(mailStatus)
-                                msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
-                            else
-                                msg.reply("You can only receive an email once every 5 minutes.");
-                        }
+                            var added = false;
+                            var code = makeid(6);
+                            for(var i = 0; i < studentData.length; i++)
+                            {
+                                if(studentData[i].studentID == studentID)
+                                {
+                                    added = true;
+                                    code = studentData[i].code;
+                                }
+                            }
 
-                        
+                            const mailStatus = sendEmail(studentID, code)
+                            
+                            if(!added)
+                            {
+                                studentData.push({studentID: studentID, userID: "", code: code});
+                                saveFile();
+
+                                if(mailStatus)
+                                    msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
+                                else
+                                    msg.reply("You can only receive an email once every 5 minutes.");
+                            }
+                            else
+                            {
+                                if(mailStatus)
+                                    msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
+                                else
+                                    msg.reply("You can only receive an email once every 5 minutes.");
+                            }
+                        }
                     }
                     else
                     {
