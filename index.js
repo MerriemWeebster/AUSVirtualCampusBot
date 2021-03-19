@@ -117,6 +117,9 @@ function saveFile()
 
 client.on('ready', () => {
     readFile();
+    client.user.setActivity('AUS Students', { type: 'WATCHING' })
+    .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+    .catch(console.error);
 });
 
 client.on('guildMemberAdd', (member) => {
