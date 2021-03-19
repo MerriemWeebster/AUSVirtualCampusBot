@@ -37,7 +37,7 @@ function sendEmail(studentID, code)
         from: 'ausvirtualcampusbot@gmail.com',
         to: studentID + '@aus.edu',
         subject: 'AUS Virtual Campus Verification Code',
-        text: 'Here is your verification code: ' + code
+        html: 'Here is your verification code: <b>' + code + '</b>\n\nReply to the bot with <b>verify ' + studentID + ' ' + code + '</b>'
     };
       
     transporter.sendMail(mailOptions, function(error, info){
@@ -242,11 +242,11 @@ client.on('message', msg => {
                             {
                                 studentData.push({studentID: studentID, userID: "", code: code});
                                 saveFile();
-                                msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please send a message with the command `verify <your-student-id> <your-code>`");
+                                msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
                             }
                             else
                             {
-                                msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please send a message with the command `verify <your-student-id> <your-code>`");
+                                msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
                             }
 
                             sendEmail(studentID, code);
