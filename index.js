@@ -17,6 +17,7 @@ var transporter = nodemailer.createTransport(smtpTransport({
 }));
 
 var studentData = null;
+var emailLimit = [];
 
 function makeid(length) 
 {
@@ -33,6 +34,37 @@ function makeid(length)
 
 function sendEmail(studentID, code)
 {
+    for(var i = 0; i < emailLimit.length; i++)
+    {
+        const sentDate = new Date(emailLimit[i].date)
+        if(sentDate.getTime() <= (new Date()).getTime())
+        {
+            emailLimit.splice(i);
+            i--;
+        }
+    }
+
+    var found = false, limited = false;
+
+    for(var i = 0; i < emailLimit.length; i++)
+    {
+        if(emailLimit[i].studentID == studentData)
+        {
+            found = true;
+            const sentDate = new Date(emailLimit[i].date)
+            if(sentDate.getTime() > (new Date()).getTime())
+            {
+                limited = true;
+            }
+        }
+    }
+
+    if(limited)
+        return false;
+
+    if(!found)
+        emailLimit.push({studentID: studentID, date: (new Date((new Date()).getTime() + 300000)).toJSON()})
+
     var mailOptions = {
         from: 'ausvirtualcampusbot@gmail.com',
         to: studentID + '@aus.edu',
@@ -47,6 +79,8 @@ function sendEmail(studentID, code)
             console.log('Email sent: ' + info.response);
         }
     });
+
+    return true;
 }
 
 function isVerifiedUser(userID)
@@ -154,6 +188,9 @@ client.on('message', msg => {
     }
     else
     {
+        if(isVerifiedUser(msg.author.id))
+           return; 
+
         const params = msg.content.split(" ");
 
         if(params[0].toLowerCase() == "verify")
@@ -208,53 +245,56 @@ client.on('message', msg => {
         }
         else
         {
-            if(!isVerifiedUser(msg.author.id))
+            
+            if(msg.content.length == 9)
             {
-                if(msg.content.length == 9)
+                const studentID = params[0];
+    
+                if((studentID.toLowerCase().indexOf("b000") > -1 || studentID.toLowerCase().indexOf("g000") > -1)
+                && (studentID.toLowerCase() != "b00000000" && studentID.toLowerCase() != "g00000000"))
                 {
-                    const studentID = params[0];
-        
-                    if((studentID.toLowerCase().indexOf("b000") > -1 || studentID.toLowerCase().indexOf("g000") > -1)
-                    && (studentID.toLowerCase() != "b00000000" && studentID.toLowerCase() != "g00000000"))
-                    {
-                        var valid = true;
+                    var valid = true;
 
-                        for(var i = 4; i < studentID.length; i++)
+                    for(var i = 4; i < studentID.length; i++)
+                    {
+                        if(isNaN(studentID[i]))   
+                            valid = false; 
+                    }
+
+                    if(valid)
+                    {
+                        var added = false;
+                        var code = makeid(6);
+                        for(var i = 0; i < studentData.length; i++)
                         {
-                            if(isNaN(studentID[i]))   
-                                valid = false; 
+                            if(studentData[i].studentID == studentID)
+                            {
+                                added = true;
+                                code = studentData[i].code;
+                            }
                         }
 
-                        if(valid)
+                        const mailStatus = sendEmail(studentID, code)
+                        
+                        if(!added)
                         {
-                            var added = false;
-                            var code = makeid(6);
-                            for(var i = 0; i < studentData.length; i++)
-                            {
-                                if(studentData[i].studentID == studentID)
-                                {
-                                    added = true;
-                                    code = studentData[i].code;
-                                }
-                            }
+                            studentData.push({studentID: studentID, userID: "", code: code});
+                            saveFile();
 
-                            if(!added)
-                            {
-                                studentData.push({studentID: studentID, userID: "", code: code});
-                                saveFile();
+                            if(mailStatus)
                                 msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
-                            }
                             else
-                            {
-                                msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
-                            }
-
-                            sendEmail(studentID, code);
+                                msg.reply("You can only receive an email once every 5 minutes.");
                         }
                         else
                         {
-                            msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                            if(mailStatus)
+                                msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
+                            else
+                                msg.reply("You can only receive an email once every 5 minutes.");
                         }
+
+                        
                     }
                     else
                     {
@@ -265,8 +305,12 @@ client.on('message', msg => {
                 {
                     msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
                 }
-            }   
-        }
+            }
+            else
+            {
+                msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+            }
+        }   
     }
 });
 
