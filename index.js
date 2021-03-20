@@ -216,7 +216,7 @@ client.on('message', msg => {
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
         {
-            msg.reply("monke https://cms.qz.com/wp-content/uploads/2015/09/gettyimages-712-24_h8_optimized.gif?quality=75&strip=all&w=350&h=197&crop=1");
+            msg.reply("monke\nhttps://cms.qz.com/wp-content/uploads/2015/09/gettyimages-712-24_h8_optimized.gif?quality=75&strip=all&w=350&h=197&crop=1");
         }
     }
     else
@@ -358,5 +358,37 @@ client.on('message', msg => {
         }   
     }
 });
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+    var channels = newState.guild.channels.cache.filter(channel => channel.parentID == "822820820845985813" && channel.type == "voice");
+
+    var freeChannels = 0;
+    for(var i = 0; i < channels.length; i++)
+    {
+        if(channels[i].members.length == 0)
+            freeChannels++;
+    }
+
+    if(freeChannels == 0)
+    {
+        newState.guild.channels.create("Infinite Voice Channel " + (channels.length + 1), {type: "voice", parent: "822820820845985813"})
+    }
+    else if(freeChannels > 1)
+    {
+        var channelsToDelete = [];
+        for(var i = channels.length - 1; i >= 0; i--)
+        {
+            if(channels[i].members.length == 0 && freeChannels - channelsToDelete.length > 1)
+            {
+                channelsToDelete.push(channels[i]);
+            }
+        }
+
+        for(var i = 0; i < channelsToDelete.length; i++)
+        {
+            channelsToDelete[i].delete();
+        }
+    }
+})
 
 client.login('ODIyNDM4NDY0MjcxOTQxNjQy.YFSRgg.uJucJgPtXxzjM5y6Wc_nDCZCGbA');
