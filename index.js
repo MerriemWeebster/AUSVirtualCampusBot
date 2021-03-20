@@ -176,7 +176,7 @@ client.on('ready', () => {
     client.guilds.fetch("821983751147356171").then((guild) => {
         guild.members.fetch().then((users) => {
             var members = users.array();
-
+            console.log("Fetched " + members.length + " members")
             for(var i = 0; i < members.length; i++)
             {
                 var roles = members[i].guild.roles.cache.array();
