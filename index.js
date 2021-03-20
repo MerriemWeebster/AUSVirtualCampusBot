@@ -179,7 +179,7 @@ client.on('ready', () => {
             console.log("Fetched " + members.length + " members")
             for(var i = 0; i < members.length; i++)
             {
-                var roles = members[i].guild.roles.cache.array();
+                var roles = members[i].roles.cache.array();
 
                 var addRole = true;
 
