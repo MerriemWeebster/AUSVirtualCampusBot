@@ -174,6 +174,8 @@ client.on('guildMemberAdd', (member) => {
     if(member.user.bot)
         return;
 
+    console.log("Welcomed " + member.displayName)
+
     if(isVerifiedUser(member.id))
     {
         var role = member.guild.roles.resolveID("822441807300001793");
@@ -201,18 +203,15 @@ client.on('message', msg => {
             var complete = false;
             for(var i = 0; i < studentData.length; i++)
             {
-                if(studentData[i].studentID == mentionedUsers[0].id)
+                if(studentData[i].userID == mentionedUsers[0].id)
                 {
                     complete = true;
-                    if(studentData[i].userID == "")
-                        msg.reply("<@" + mentionedUsers[0].id + "> is already unverified");
-                    else
-                        msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
+                    msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
                 }
             }
 
             if(!complete)
-                msg.reply("<@" + mentionedUsers[0].id + "> not found in database");
+                msg.reply("<@" + mentionedUsers[0].id + "> not found in database or already unverified");
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
