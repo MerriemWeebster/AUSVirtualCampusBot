@@ -260,6 +260,7 @@ client.on('message', msg => {
                                 if(verifyStudent(studentID, code, msg.author.id))
                                 {
                                     msg.reply("You have been verified.");
+                                    console.log("Verified " + msg.author.tag)
                                 }
                                 else
                                 {
