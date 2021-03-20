@@ -195,23 +195,23 @@ client.on('message', msg => {
             msg.reply(`🏓Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
         }
 
-        if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentions.users.length > 0)
+        if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentions.members.length > 0)
         {
             var complete = false;
             for(var i = 0; i < studentData.length; i++)
             {
-                if(studentData[i].studentData == msg.mentions.users[0].id)
+                if(studentData[i].studentData == msg.mentions.members[0].id)
                 {
                     complete = true;
                     if(studentData[i].userID == "")
-                        msg.reply("<@" + msg.mentions.users[0].id + "> is already unverified");
+                        msg.reply("<@" + msg.mentions.members[0].id + "> is already unverified");
                     else
-                        msg.reply("<@" + msg.mentions.users[0].id + "> is now unverified");
+                        msg.reply("<@" + msg.mentions.members[0].id + "> is now unverified");
                 }
             }
 
             if(!complete)
-                msg.reply("<@" + msg.mentions.users[0].id + "> not found in database");
+                msg.reply("<@" + msg.mentions.members[0].id + "> not found in database");
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
