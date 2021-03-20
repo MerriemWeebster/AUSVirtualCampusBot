@@ -359,42 +359,4 @@ client.on('message', msg => {
     }
 });
 
-client.on('voiceStateUpdate', (oldState, newState) => {
-    /*var channels = newState.guild.channels.cache.filter(channel => (channel.parentID == "822820820845985813" && channel.type == "voice"));
-
-    if(channels.length == 0)
-    {
-        console.log("Filter failed");
-        return;
-    }
-
-    var freeChannels = 0;
-    for(var i = 0; i < channels.length; i++)
-    {
-        if(channels[i].members.length == 0)
-            freeChannels++;
-    }
-
-    if(freeChannels == 0)
-    {
-        newState.guild.channels.create("Infinite Voice Channel " + (channels.length + 1), {type: "voice", parent: "822820820845985813"})
-    }
-    else if(freeChannels > 1)
-    {
-        var channelsToDelete = [];
-        for(var i = channels.length - 1; i >= 0; i--)
-        {
-            if(channels[i].members.length == 0 && freeChannels - channelsToDelete.length > 1)
-            {
-                channelsToDelete.push(channels[i]);
-            }
-        }
-
-        for(var i = 0; i < channelsToDelete.length; i++)
-        {
-            channelsToDelete[i].delete();
-        }
-    }*/
-})
-
 client.login('ODIyNDM4NDY0MjcxOTQxNjQy.YFSRgg.uJucJgPtXxzjM5y6Wc_nDCZCGbA');
