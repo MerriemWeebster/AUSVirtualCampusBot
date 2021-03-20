@@ -360,7 +360,13 @@ client.on('message', msg => {
 });
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-    var channels = newState.guild.channels.cache.filter(channel => channel.parentID == "822820820845985813" && channel.type == "voice");
+    var channels = newState.guild.channels.cache.filter(channel => (channel.parentID == "822820820845985813" && channel.type == "voice"));
+
+    if(channels.length == 0)
+    {
+        console.log("Filter failed");
+        return;
+    }
 
     var freeChannels = 0;
     for(var i = 0; i < channels.length; i++)
