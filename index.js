@@ -206,6 +206,7 @@ client.on('message', msg => {
                 if(studentData[i].userID == mentionedUsers[0].id)
                 {
                     complete = true;
+                    studentData[i].userID = "";
                     msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
                 }
             }
