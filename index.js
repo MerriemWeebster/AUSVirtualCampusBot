@@ -48,7 +48,7 @@ function sendEmail(studentID, code)
 
     for(var i = 0; i < emailLimit.length; i++)
     {
-        if(emailLimit[i].studentID == studentID)
+        if(emailLimit[i].studentID.toLowerCase()  == studentID.toLowerCase() )
         {
             found = true;
             const sentDate = new Date(emailLimit[i].date)
@@ -104,7 +104,7 @@ function isVerifiedStudent(studentID)
     for(var i = 0; i < studentData.length; i++)
     {
         const student = studentData[i];
-        if(student.studentID == studentID)
+        if(student.studentID.toLowerCase() == studentID.toLowerCase() )
         {
             return (student.userID != "");
         }
@@ -118,7 +118,7 @@ function verifyStudent(studentID, code, userID)
     for(var i = 0; i < studentData.length; i++)
     {
         const student = studentData[i];
-        if(student.studentID == studentID)
+        if(student.studentID.toLowerCase()  == studentID.toLowerCase() )
         {
             if(code == student.code)
             {
@@ -354,7 +354,7 @@ client.on('message', msg => {
                             var code = makeid(6);
                             for(var i = 0; i < studentData.length; i++)
                             {
-                                if(studentData[i].studentID == studentID)
+                                if(studentData[i].studentID.toLowerCase()  == studentID.toLowerCase() )
                                 {
                                     added = true;
                                     code = studentData[i].code;
