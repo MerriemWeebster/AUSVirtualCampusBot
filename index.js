@@ -48,7 +48,7 @@ function sendEmail(studentID, code)
 
     for(var i = 0; i < emailLimit.length; i++)
     {
-        if(emailLimit[i].studentID == studentData)
+        if(emailLimit[i].studentID == studentID)
         {
             found = true;
             const sentDate = new Date(emailLimit[i].date)
@@ -209,6 +209,7 @@ client.on('message', msg => {
                 {
                     complete = true;
                     studentData[i].userID = "";
+                    saveFile();
                     msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
                 }
             }
