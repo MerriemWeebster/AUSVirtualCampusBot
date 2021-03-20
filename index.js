@@ -190,14 +190,33 @@ client.on('message', msg => {
 
     if(msg.channel.guild != null)
     {
-        if (msg.content === 'aus/ping') 
+        if (msg.content.toLowerCase() === 'aus/ping') 
         {
-          msg.reply('pong');
+            msg.reply(`🏓Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+        }
+
+        if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentionds.members.length > 0)
+        {
+            var complete = false;
+            for(var i = 0; i < studentData.length; i++)
+            {
+                if(studentData[i].studentData == msg.mentionds.members[0].id)
+                {
+                    complete = true;
+                    if(studentData[i].userID == "")
+                        msg.reply("<@" + msg.mentionds.members[0].id + "> is already unverified");
+                    else
+                        msg.reply("<@" + msg.mentionds.members[0].id + "> is now unverified");
+                }
+            }
+
+            if(!complete)
+                msg.reply("<@" + msg.mentionds.members[0].id + "> not found in database");
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
         {
-            msg.reply("monke");
+            msg.reply("monke https://cms.qz.com/wp-content/uploads/2015/09/gettyimages-712-24_h8_optimized.gif?quality=75&strip=all&w=350&h=197&crop=1");
         }
     }
     else
