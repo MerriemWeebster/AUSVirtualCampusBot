@@ -128,6 +128,8 @@ function verifyStudent(studentID, code, userID)
                     guild.members.fetch(userID).then((member) => {
                         var role = member.guild.roles.resolveID("822441807300001793");
                         member.roles.add(role);
+                        var unverifiedRole = member.guild.roles.resolveID("822913697751760936");
+                        member.roles.remove(unverifiedRole);
                     }).catch((error) => console.log(error))
                 }).catch((error) => console.log(error))
             }
@@ -170,6 +172,33 @@ client.on('ready', () => {
     client.user.setActivity('AUS Students', { type: 'WATCHING' })
     .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
     .catch(console.error);
+
+    client.guilds.fetch("821983751147356171").then((guild) => {
+        guild.members.fetch().then((users) => {
+            var members = users.array();
+
+            for(var i = 0; i < members.length; i++)
+            {
+                var roles = members[i].guild.roles.cache.array();
+
+                var addRole = true;
+
+                for(var j = 0; j < roles.length; j++)
+                {
+                    if(roles[j].id == "822441807300001793")
+                        addRole = false;
+                }
+
+                if(addRole)
+                {
+                    var role = members[i].guild.roles.resolveID("822913697751760936");
+                    members[i].roles.add(role);
+                }
+            }
+
+            
+        }).catch((error) => console.log(error))
+    }).catch((error) => console.log(error))
 });
 
 client.on('guildMemberAdd', (member) => {
@@ -185,7 +214,11 @@ client.on('guildMemberAdd', (member) => {
         member.send("Welcome back to the AUS Virtual Campus!");
     }
     else
+    {
         member.send("Welcome to the AUS Virtual Campus! You can verify yourself here by sending your AUS ID! Examples: `b000XXXXX` `g000XXXXX`.");
+        var role = member.guild.roles.resolveID("822913697751760936");
+        member.roles.add(role);
+    }
 });
 
 client.on('message', msg => {
