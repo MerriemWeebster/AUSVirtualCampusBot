@@ -200,18 +200,18 @@ client.on('message', msg => {
             var complete = false;
             for(var i = 0; i < studentData.length; i++)
             {
-                if(studentData[i].studentData == msg.mentionds.members[0].id)
+                if(studentData[i].studentData == msg.mentions.members[0].id)
                 {
                     complete = true;
                     if(studentData[i].userID == "")
-                        msg.reply("<@" + msg.mentionds.members[0].id + "> is already unverified");
+                        msg.reply("<@" + msg.mentions.members[0].id + "> is already unverified");
                     else
-                        msg.reply("<@" + msg.mentionds.members[0].id + "> is now unverified");
+                        msg.reply("<@" + msg.mentions.members[0].id + "> is now unverified");
                 }
             }
 
             if(!complete)
-                msg.reply("<@" + msg.mentionds.members[0].id + "> not found in database");
+                msg.reply("<@" + msg.mentions.members[0].id + "> not found in database");
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
