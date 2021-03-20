@@ -197,21 +197,22 @@ client.on('message', msg => {
 
         if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentions.users.array().length > 0)
         {
+            var mentionedUsers = msg.mentions.users.array();
             var complete = false;
             for(var i = 0; i < studentData.length; i++)
             {
-                if(studentData[i].studentData == msg.mentions.users.array()[0].id)
+                if(studentData[i].studentID == mentionedUsers[0].id)
                 {
                     complete = true;
                     if(studentData[i].userID == "")
-                        msg.reply("<@" + msg.mentions.users.array()[0].id + "> is already unverified");
+                        msg.reply("<@" + mentionedUsers[0].id + "> is already unverified");
                     else
-                        msg.reply("<@" + msg.mentions.users.array()[0].id + "> is now unverified");
+                        msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
                 }
             }
 
             if(!complete)
-                msg.reply("<@" + msg.mentions.users.array()[0].id + "> not found in database");
+                msg.reply("<@" + mentionedUsers[0].id + "> not found in database");
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
