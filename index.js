@@ -104,7 +104,7 @@ function isVerifiedStudent(studentID)
     for(var i = 0; i < studentData.length; i++)
     {
         const student = studentData[i];
-        if(student.studentID.toLowerCase() == studentID.toLowerCase() )
+        if(student.studentID.toLowerCase() == studentID.toLowerCase())
         {
             return (student.userID != "");
         }
@@ -118,7 +118,7 @@ function verifyStudent(studentID, code, userID)
     for(var i = 0; i < studentData.length; i++)
     {
         const student = studentData[i];
-        if(student.studentID.toLowerCase()  == studentID.toLowerCase() )
+        if(student.studentID.toLowerCase()  == studentID.toLowerCase())
         {
             if(code == student.code)
             {
