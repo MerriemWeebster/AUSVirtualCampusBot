@@ -360,7 +360,7 @@ client.on('message', msg => {
 });
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-    var channels = newState.guild.channels.cache.filter(channel => (channel.parentID == "822820820845985813" && channel.type == "voice"));
+    /*var channels = newState.guild.channels.cache.filter(channel => (channel.parentID == "822820820845985813" && channel.type == "voice"));
 
     if(channels.length == 0)
     {
@@ -394,7 +394,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
         {
             channelsToDelete[i].delete();
         }
-    }
+    }*/
 })
 
 client.login('ODIyNDM4NDY0MjcxOTQxNjQy.YFSRgg.uJucJgPtXxzjM5y6Wc_nDCZCGbA');
