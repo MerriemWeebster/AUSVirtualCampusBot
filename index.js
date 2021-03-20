@@ -65,6 +65,8 @@ function sendEmail(studentID, code)
     if(!found)
         emailLimit.push({studentID: studentID, date: (new Date((new Date()).getTime() + 300000)).toJSON()})
 
+    console.log(emailLimit)
+
     var mailOptions = {
         from: 'ausvirtualcampusbot@gmail.com',
         to: studentID + '@aus.edu',
