@@ -179,20 +179,23 @@ client.on('ready', () => {
             console.log("Fetched " + members.length + " members")
             for(var i = 0; i < members.length; i++)
             {
-                var roles = members[i].roles.cache.array();
-
-                var addRole = true;
-
-                for(var j = 0; j < roles.length; j++)
+                if(!members[i].user.bot)
                 {
-                    if(roles[j].id == "822441807300001793")
-                        addRole = false;
-                }
+                    var roles = members[i].roles.cache.array();
 
-                if(addRole)
-                {
-                    var role = members[i].guild.roles.resolveID("822913697751760936");
-                    members[i].roles.add(role);
+                    var addRole = true;
+    
+                    for(var j = 0; j < roles.length; j++)
+                    {
+                        if(roles[j].id == "822441807300001793")
+                            addRole = false;
+                    }
+    
+                    if(addRole)
+                    {
+                        var role = members[i].guild.roles.resolveID("822913697751760936");
+                        members[i].roles.add(role);
+                    }
                 }
             }
 
