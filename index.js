@@ -151,7 +151,22 @@ function readFile()
         } 
         else 
         {
-            studentData = JSON.parse(data);
+            var rawData = JSON.parse(data);
+
+            for(var i = 0; i < rawData.length; i++)
+            {
+                for(var j = 0; j < rawData.length; j++)
+                {
+                    if(i != j && rawData[i].studentID.toLowerCase() == rawData[j].studentID.toLowerCase())
+                    {
+                        rawData.splice(j);
+                        i--;
+                        j--;
+                    }
+                }
+            }
+            
+            studentData = rawData;
         }
     
     });
