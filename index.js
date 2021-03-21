@@ -344,7 +344,7 @@ client.on('message', msg => {
             }
             else
             {
-                msg.reply("Invalid command format. Example for a valid command: `verify <your-student-id> <your-code>`.");
+                msg.reply("Invalid command format. Example for a valid command: `verify your-student-id your-code`.");
             }
         }
         else
@@ -392,14 +392,14 @@ client.on('message', msg => {
                                 saveFile();
 
                                 if(mailStatus)
-                                    msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
+                                    msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify your-student-id your-code`");
                                 else
                                     msg.reply("You can only receive an email once every 5 minutes.");
                             }
                             else
                             {
                                 if(mailStatus)
-                                    msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify <your-student-id> <your-code>`");
+                                    msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify your-student-id your-code`");
                                 else
                                     msg.reply("You can only receive an email once every 5 minutes.");
                             }
