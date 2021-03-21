@@ -155,12 +155,13 @@ function readFile()
             var modified = false;
             for(var i = 0; i < rawData.length; i++)
             {
-                for(var j = 0; j < rawData.length; j++)
+                for(var j = i; j < rawData.length; j++)
                 {
                     if(i != j && rawData[i].studentID.toLowerCase() == rawData[j].studentID.toLowerCase())
                     {
                         modified = true;
                         rawData.splice(j);
+                        j--;
                     }
                 }
             }
