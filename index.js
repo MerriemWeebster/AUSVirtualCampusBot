@@ -16,7 +16,7 @@ var transporter = nodemailer.createTransport(smtpTransport({
     }
 }));
 
-var studentData = null;
+var studentData = [];
 var emailLimit = [];
 
 function makeid(length) 
@@ -245,7 +245,7 @@ client.on('guildMemberAdd', (member) => {
 });
 
 client.on('message', msg => {
-    if(msg.author.bot || studentData == null)
+    if(msg.author.bot || studentData == [])
         return;
 
     if(msg.channel.guild != null)
