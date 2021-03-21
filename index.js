@@ -155,18 +155,20 @@ function readFile()
             var modified = false;
             for(var i = 0; i < rawData.length; i++)
             {
-                for(var j = i; j < rawData.length; j++)
+                var add = true;
+
+                for(var j = 0; j < studentData.length; j++)
                 {
-                    if(i != j && rawData[i].studentID.toLowerCase() == rawData[j].studentID.toLowerCase())
+                    if(studentData[j].studentID.toLowerCase() == rawData[i].studentID.toLowerCase())
                     {
                         modified = true;
-                        rawData.splice(j);
-                        j--;
+                        add = false;
                     }
                 }
-            }
-            
-            studentData = rawData;
+
+                if(add)
+                    studentData.push(rawData[i])
+            }            
 
             if(modified)
                 saveFile();
