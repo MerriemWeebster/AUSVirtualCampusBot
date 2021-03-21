@@ -161,6 +161,9 @@ function readFile()
                 {
                     if(studentData[j].studentID.toLowerCase() == rawData[i].studentID.toLowerCase())
                     {
+                        if(studentData[j].userID == "" && rawData[i].userID != "")
+                            studentData[j].userID = rawData[i].userID;
+
                         modified = true;
                         add = false;
                     }
