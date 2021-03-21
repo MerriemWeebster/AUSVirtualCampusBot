@@ -161,8 +161,6 @@ function readFile()
                     {
                         modified = true;
                         rawData.splice(j);
-                        i--;
-                        j--;
                     }
                 }
             }
