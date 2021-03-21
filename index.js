@@ -237,7 +237,7 @@ client.on('guildMemberAdd', (member) => {
     {
         var role = member.guild.roles.resolveID("822441807300001793");
         member.roles.add(role);
-        member.send("Welcome back to the AUS Virtual Campus!");
+        member.send("Welcome back to the AUS Virtual Campus! Get your roles back in <#822446668288884776>.");
     }
     else
     {
@@ -318,7 +318,7 @@ client.on('message', msg => {
                             {
                                 if(verifyStudent(studentID, code, msg.author.id))
                                 {
-                                    msg.reply("You have been verified.");
+                                    msg.reply("You have been verified. Give yourself some roles in <#822446668288884776> and introduce yourself in <#822027928043913246>!");
                                     console.log("Verified " + msg.author.tag)
                                 }
                                 else
