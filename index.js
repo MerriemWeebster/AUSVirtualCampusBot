@@ -376,7 +376,7 @@ client.on('message', msg => {
                             {
                                 if(verifyStudent(studentID, code, msg.author.id))
                                 {
-                                    msg.reply("You have been verified. Give yourself some roles in <#822446668288884776> and introduce yourself in <#822027928043913246>!");
+                                    msg.reply("You have been verified. Give yourself some roles in <#822446668288884776> and introduce yourself in <#822027928043913246>! Maybe even add your birthday in <#823612251268972645>!");
                                     console.log("Verified " + msg.author.tag)
                                 }
                                 else
