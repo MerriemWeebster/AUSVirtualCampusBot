@@ -330,17 +330,17 @@ client.on('message', msg => {
                         }
                         else
                         {
-                            msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                            msg.reply("Invalid student ID, ID should have one letter and 8 numbers. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
                         }
                     }
                     else
                     {
-                        msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                        msg.reply("Invalid student ID, in correct format. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
                     }
                 }
                 else
                 {
-                    msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                    msg.reply("Invalid student ID, incorrect length. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
                 }
             }
             else
@@ -408,17 +408,17 @@ client.on('message', msg => {
                     }
                     else
                     {
-                        msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                        msg.reply("Invalid student ID, ID should have one letter and 8 numbers. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
                     }
                 }
                 else
                 {
-                    msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                    msg.reply("Invalid student ID, in correct format. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
                 }
             }
             else
             {
-                msg.reply("Invalid student ID. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                msg.reply("Invalid student ID, incorrect length. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
             }
         }   
     }
