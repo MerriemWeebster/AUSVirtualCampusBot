@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
+const schedule = require('node-schedule');
 
 var transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
@@ -191,6 +192,54 @@ function saveFile()
     });
 }
 
+function removeUnverified()
+{
+    client.guilds.fetch("821983751147356171").then((guild) => {
+        guild.members.fetch().then((users) => {
+            var members = users.array();
+            console.log("Fetched " + members.length + " members to check unverified")
+            for(var i = 0; i < members.length; i++)
+            {
+                if(!members[i].user.bot)
+                {
+                    var roles = members[i].roles.cache.array();
+
+                    var checkToRemove = false;
+    
+                    for(var j = 0; j < roles.length; j++)
+                    {
+                        if(roles[j].id == "822913697751760936")
+                            checkToRemove = true;
+                    }
+    
+                    if(checkToRemove)
+                    {
+                        if((new Date()).getTime() - members[i].joinedAt.getTime() >= 86400000*7)
+                        {
+                            members[i].send("You have been removed from the server for not being verified after a week, please join again if you wish to be verified.").then(() => {
+                                members[i].kick("Inactive and unverified");
+                            }).catch((err) => {
+                                console.log(err)
+                                members[i].kick("Inactive and unverified");
+                            })
+                        }
+                    }
+                }
+            }
+
+            
+        }).catch((error) => console.log(error))
+    }).catch((error) => console.log(error))
+
+    var startingDate = new Date();
+    startingDate.setHours(0,0,0,0);
+
+    schedule.scheduleJob(new Date(startingDate.getTime() + 86400000), function(){
+        removeUnverified();
+    });
+}
+
+
 client.on('ready', () => {
     readFile();
     client.user.setActivity('AUS Students', { type: 'WATCHING' })
@@ -223,7 +272,7 @@ client.on('ready', () => {
                 }
             }
 
-            
+            removeUnverified();
         }).catch((error) => console.log(error))
     }).catch((error) => console.log(error))
 });
