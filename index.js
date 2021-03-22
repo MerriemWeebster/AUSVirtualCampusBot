@@ -233,7 +233,7 @@ function removeUnverified()
     }).catch((error) => console.log(error))
 
     var startingDate = new Date();
-    startingDate.setHours(0,0,0,0);
+    startingDate.setUTCHours(0,0,0,0);
 
     schedule.scheduleJob(new Date(startingDate.getTime() + 86400000), function(){
         removeUnverified();
