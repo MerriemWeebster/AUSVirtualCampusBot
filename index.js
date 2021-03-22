@@ -281,6 +281,7 @@ client.on('message', msg => {
         if(msg.content.toLowerCase().startsWith("aus/readfile") && msg.author.id == "281876391535050762")
         {
             readFile();
+            msg.reply("File read, data reset.")
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
