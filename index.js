@@ -300,6 +300,7 @@ client.on('message', msg => {
                     if((studentID.toLowerCase().indexOf("b000") > -1 || studentID.toLowerCase().indexOf("g000") > -1)
                     && (studentID.toLowerCase() != "b00000000" && studentID.toLowerCase() != "g00000000"))
                     {
+                        console.log("Validating for verification: [" + studentData + "]")
                         var valid = true;
     
                         for(var i = 4; i < studentID.length; i++)
