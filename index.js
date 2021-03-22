@@ -151,6 +151,7 @@ function readFile()
         } 
         else 
         {
+            studentData = [];
             var rawData = JSON.parse(data);
             var modified = false;
             for(var i = 0; i < rawData.length; i++)
@@ -275,6 +276,11 @@ client.on('message', msg => {
 
             if(!complete)
                 msg.reply("<@" + mentionedUsers[0].id + "> not found in database or already unverified");
+        }
+
+        if(msg.content.toLowerCase().startsWith("aus/readfile") && msg.author.id == "281876391535050762")
+        {
+            readFile();
         }
       
         if(msg.content.toLowerCase().indexOf("monke") > -1)
