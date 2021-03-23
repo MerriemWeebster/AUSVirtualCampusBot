@@ -379,7 +379,7 @@ function monkeReply(msg)
     var randomGif = Math.floor(Math.random() * gifs.length)
     var gifURL = gifs[randomGif]["media"][0]["gif"]["url"]
     msg.reply("monke", {files: [gifURL]}).catch((err) => {
-        console.log(err)
+        console.log("Removing large GIF Index: " + randomGif + " due to error - " + err.message)
         gifs.splice(randomGif);
 
         if(gifs.length < 10)
