@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport(smtpTransport({
     }
 }));
 
-var gifs = null, gifsLonely = null;
+var gifs = null;
 const https = require('https');
 
 function httpGetAsync(theUrl, callback)
@@ -309,6 +309,7 @@ function removeUnverified()
 
     schedule.scheduleJob(new Date(startingDate.getTime() + 86400000), function(){
         removeUnverified();
+        httpGetAsync(url,tenorCallback_anonid); 
     });
 }
 
