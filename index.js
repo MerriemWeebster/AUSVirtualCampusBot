@@ -374,6 +374,17 @@ client.on('guildMemberAdd', (member) => {
     }
 });
 
+function monkeReply(msg)
+{
+    var randomGif = Math.floor(Math.random() * gifs.length)
+    var gifURL = gifs[randomGif]["media"][0]["gif"]["url"]
+    msg.reply("monke", {files: [gifURL]}).catch((err) => {
+        console.log(err)
+        gifs.splice(randomGif);
+        monkeReply(msg);
+    });
+}
+
 client.on('message', msg => {
     if(msg.author.bot || studentData == [])
         return;
@@ -418,13 +429,7 @@ client.on('message', msg => {
             }
             else
             {
-                var randomGif = Math.floor(Math.random() * gifs.length)
-                var gifURL = gifs[randomGif]["media"][0]["gif"]["url"]
-                msg.reply("monke", {files: [gifURL]}).catch((err) => {
-                    console.log(err)
-                    gifs.splice(randomGif);
-                    msg.reply("monke");
-                });
+                monkeReply(msg);
             }
         }
     }
