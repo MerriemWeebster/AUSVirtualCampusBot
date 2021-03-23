@@ -419,7 +419,11 @@ client.on('message', msg => {
             {
                 var randomGif = Math.floor(Math.random() * gifs.length)
                 var gifURL = gifs[randomGif]["media"][0]["gif"]["url"]
-                msg.reply("monke", {files: [gifURL]});
+                msg.reply("monke", {files: [gifURL]}).catch((err) => {
+                    console.log(err)
+                    gifs.splice(randomGif);
+                    msg.reply("monke");
+                });
             }
         }
     }
