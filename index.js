@@ -381,7 +381,11 @@ function monkeReply(msg)
     msg.reply("monke", {files: [gifURL]}).catch((err) => {
         console.log(err)
         gifs.splice(randomGif);
-        monkeReply(msg);
+
+        if(gifs.length < 10)
+            httpGetAsync(url,tenorCallback_anonid); 
+        else
+            monkeReply(msg);
     });
 }
 
