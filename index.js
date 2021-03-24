@@ -383,7 +383,10 @@ function monkeReply(msg)
         gifs.splice(randomGif);
 
         if(gifs.length < 10)
+        {
             httpGetAsync(url,tenorCallback_anonid); 
+            msg.reply("ran out of monke, finding more monke...")
+        }
         else
             monkeReply(msg);
     });
