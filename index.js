@@ -452,6 +452,12 @@ client.on('message', msg => {
                 msg.reply(`🏓Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
             }
 
+            if (msg.content.toLowerCase() === 'aus/endevent') 
+            {
+                eventPlaying = false;
+                currentAnswer = 0;
+            }
+
             if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentions.users.array().length > 0)
             {
                 var mentionedUsers = msg.mentions.users.array();
