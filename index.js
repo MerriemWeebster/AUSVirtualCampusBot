@@ -697,7 +697,7 @@ var webhook = listener.createServer({
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
-                        channel.send("Time is up for this question!\n\Current Scores Array: " + eventScores)
+                        channel.send("Time is up for this question!\n\Current Scores Array: " + JSON.stringify(eventScores))
                     }).catch((error) => console.log(error))
                 }
             }
