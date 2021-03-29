@@ -661,9 +661,8 @@ var webhook = listener.createServer({
                         eventScores = [];
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
-                        guild.channels.resolveID(eventChannel).then((channel) => {
-                            channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!")
-                        }).catch((error) => console.log(error))
+                        var channel = guild.channels.resolve(eventChannel)
+                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!")
                     }).catch((error) => console.log(error))
                 }
                 else if(currentAnswer == -1)
@@ -693,9 +692,8 @@ var webhook = listener.createServer({
                     eventAnswers = [];
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
-                        guild.channels.resolveID(eventChannel).then((channel) => {
-                            channel.send("Time is up for this question!\n\Current Scores Array: " + eventScores)
-                        }).catch((error) => console.log(error))
+                        var channel = guild.channels.resolve(eventChannel)
+                        channel.send("Time is up for this question!\n\Current Scores Array: " + eventScores)
                     }).catch((error) => console.log(error))
                 }
             }
