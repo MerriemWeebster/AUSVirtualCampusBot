@@ -414,27 +414,31 @@ client.on('message', msg => {
         {
             if(currentAnswer > 0)
             {
-                if(msg.content != "1" && msg.content != "2" && msg.content != "3" && msg.content != "4")
+                var answered = false;
+
+                for(var i = 0; i < eventAnswers.length; i++)
                 {
-                    msg.reply("Please send a number from 1-4 only.")
+                    if(eventAnswers[i].userID == msg.author.id)
+                    {
+                        answered = true;
+                    }
+                }
+
+                if(answered)
+                {
+                    msg.reply("You have already answered this question.")
                 }
                 else
                 {
-                    var answered = false;
-
-                    for(var i = 0; i < eventAnswers.length; i++)
+                    if(msg.content != "1" && msg.content != "2" && msg.content != "3" && msg.content != "4")
                     {
-                        if(eventAnswers[i].userID == msg.author.id)
-                        {
-                            answered = true;
-                        }
+                        msg.reply("Please send a number from 1-4 only.")
                     }
-    
-                    if(answered)
-                        msg.reply("You have already answered this question.")
                     else
+                    {
                         eventAnswers.push({userID: msg.author.id, answer: msg.content})
-                }   
+                    }   
+                }
             }
             else
             {
