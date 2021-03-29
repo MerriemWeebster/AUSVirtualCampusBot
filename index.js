@@ -289,11 +289,12 @@ function removeUnverified()
                         if((new Date()).getTime() - members[i].joinedAt.getTime() >= 86400000*7)
                         {
                             console.log("Kicked for inactivity: " + members[i].user.tag)
-                            members[i].send("You have been removed from the server for not being verified after a week, please join again if you wish to be verified.").then(() => {
-                                members[i].kick("Inactive and unverified");
+                            const member = members[i];
+                            member.send("You have been removed from the server for not being verified after a week, please join again if you wish to be verified.").then(() => {
+                                member.kick("Inactive and unverified");
                             }).catch((err) => {
                                 console.log(err)
-                                members[i].kick("Inactive and unverified");
+                                member.kick("Inactive and unverified");
                             })
                         }
                     }
