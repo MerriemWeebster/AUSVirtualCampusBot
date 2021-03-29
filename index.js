@@ -456,7 +456,7 @@ client.on('message', msg => {
             if (msg.content.toLowerCase() === 'aus/startevent' && msg.channel.id == "822443774507614218") 
             {
                 var category = msg.guild.channels.resolve(eventChannel).parent;
-                category.overwritePermissions([{id: "822441807300001793", allow: ['SEND_MESSAGES', 'CONNECT']}])
+                category.overwritePermissions([{id: "822441807300001793", allow: ['SEND_MESSAGES', 'CONNECT', 'VIEW_CHANNEL']}, {id: "821983751147356171", deny: ['VIEW_CHANNEL']}])
                 msg.reply("Event started")
             }
 
@@ -469,7 +469,7 @@ client.on('message', msg => {
                 eventScores = [];
 
                 var category = msg.guild.channels.resolve(eventChannel).parent;
-                category.overwritePermissions([{id: "822441807300001793", deny: ['SEND_MESSAGES', 'CONNECT']}])
+                category.overwritePermissions([{id: "822441807300001793", deny: ['SEND_MESSAGES', 'CONNECT'], allow: ['VIEW_CHANNEL']}, {id: "821983751147356171", deny: ['VIEW_CHANNEL']}])
 
                 msg.reply("Event reset")
             }
