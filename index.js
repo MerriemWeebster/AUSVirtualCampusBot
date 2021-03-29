@@ -677,12 +677,15 @@ var webhook = listener.createServer({
                     {
                         prevAnswer = 0;
                         eventAnswers = [];
-                        eventScores = [];
                     }
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
-                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!")
+                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!\n\nCurrent Scores: \n\n`User - Score`\n" + getLeaderboard())
+
+                        if(!eventPlaying)
+                            eventScores = [];
+
                     }).catch((error) => console.log(error))
                 }
                 else if(currentAnswer == -1)
@@ -719,7 +722,7 @@ var webhook = listener.createServer({
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
-                        channel.send("Time is up for this question!\n\Current Scores Array: " + JSON.stringify(eventScores))
+                        channel.send("Time is up for this question!\n\nCurrent Scores: \n\n`User - Score`\n" + getLeaderboard())
                     }).catch((error) => console.log(error))
                 }
                 else
@@ -733,3 +736,21 @@ var port = 2000;
 webhook.listen(port, function callback () {
     console.log("Server is listening on port " + port);
 });
+
+const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function getLeaderboard()
+{
+    eventScores.sort((a, b) => (a.score > b.score) ? 1 : -1)
+
+    var list = "";
+
+    for(var i = 0; i < eventScores.length; i++)
+    {
+        list = list + "<@" + eventScores[i].userID + "> - " + numberWithCommas(eventScores[i].score) + "\n";
+    }
+
+    return list;
+}
