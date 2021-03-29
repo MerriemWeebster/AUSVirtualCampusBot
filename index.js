@@ -401,51 +401,89 @@ function monkeReply(msg)
     });
 }
 
+const eventChannel = "826107910383599687";
+
+var eventAnswers = []
+
 client.on('message', msg => {
     if(msg.author.bot || studentData == [])
         return;
 
     if(msg.channel.guild != null)
     {
-        if (msg.content.toLowerCase() === 'aus/ping') 
+        if(msg.channel.id == eventChannel && eventStart)
         {
-            msg.reply(`🏓Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
-        }
-
-        if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentions.users.array().length > 0)
-        {
-            var mentionedUsers = msg.mentions.users.array();
-            var complete = false;
-            for(var i = 0; i < studentData.length; i++)
+            if(currentAnswer > 0)
             {
-                if(studentData[i].userID == mentionedUsers[0].id)
+                if(msg.content != "1" || msg.content != "2" || msg.content != "3" || msg.content != "4")
                 {
-                    complete = true;
-                    studentData[i].userID = "";
-                    saveFile();
-                    msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
+                    msg.reply("Please send a number from 1-4 only.")
                 }
-            }
+                else
+                {
+                    var answered = false;
 
-            if(!complete)
-                msg.reply("<@" + mentionedUsers[0].id + "> not found in database or already unverified");
-        }
-
-        if(msg.content.toLowerCase().startsWith("aus/readfile") && msg.author.id == "281876391535050762")
-        {
-            readFile();
-            msg.reply("File read, data reset.")
-        }
-      
-        if(msg.content.toLowerCase().indexOf("monke") > -1)
-        {
-            if(gifs == null)
-            {
-                httpGetAsync(url,tenorCallback_anonid); 
+                    for(var i = 0; i < eventAnswers.length; i++)
+                    {
+                        if(eventAnswers[i].userID == msg.author.id)
+                        {
+                            answered = true;
+                        }
+                    }
+    
+                    if(answered)
+                        msg.reply("You have already answered this question.")
+                    else
+                        eventAnswers.push({userID: message.author.id, answer: msg.content})
+                }   
             }
             else
             {
-                monkeReply(msg);
+                msg.reply("Please wait for a question to be displayed.")
+            }
+        }
+        else
+        {  
+            if (msg.content.toLowerCase() === 'aus/ping') 
+            {
+                msg.reply(`🏓Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+            }
+
+            if(msg.content.toLowerCase().startsWith("aus/unverify ") && msg.author.id == "281876391535050762" && msg.mentions.users.array().length > 0)
+            {
+                var mentionedUsers = msg.mentions.users.array();
+                var complete = false;
+                for(var i = 0; i < studentData.length; i++)
+                {
+                    if(studentData[i].userID == mentionedUsers[0].id)
+                    {
+                        complete = true;
+                        studentData[i].userID = "";
+                        saveFile();
+                        msg.reply("<@" + mentionedUsers[0].id + "> is now unverified");
+                    }
+                }
+
+                if(!complete)
+                    msg.reply("<@" + mentionedUsers[0].id + "> not found in database or already unverified");
+            }
+
+            if(msg.content.toLowerCase().startsWith("aus/readfile") && msg.author.id == "281876391535050762")
+            {
+                readFile();
+                msg.reply("File read, data reset.")
+            }
+        
+            if(msg.content.toLowerCase().indexOf("monke") > -1)
+            {
+                if(gifs == null)
+                {
+                    httpGetAsync(url,tenorCallback_anonid); 
+                }
+                else
+                {
+                    monkeReply(msg);
+                }
             }
         }
     }
@@ -592,3 +630,78 @@ client.on('message', msg => {
 });
 
 client.login('ODIyNDM4NDY0MjcxOTQxNjQy.YFSRgg.uJucJgPtXxzjM5y6Wc_nDCZCGbA');
+
+var eventPlaying = false;
+var currentAnswer = 0;
+
+var eventScores = [];
+
+var listener = require("contentful-webhook-listener");
+var webhook = listener.createServer({
+    "Authorization": "DANIAUSBOT"
+}, function requestListener (request, response) {
+    console.log("request received");
+    var body = []
+    request.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+            body = Buffer.concat(body).toString()
+            if(body != [] && body !== undefined && body !== null)
+            {
+                var data = JSON.parse(body);
+                
+                currentAnswer = data.currrentAnswer;
+                eventPlaying = data.eventPlaying;
+
+                if(currentAnswer == 0)
+                {
+                    if(!eventPlaying)
+                        eventScores = [];
+
+                    client.guilds.fetch("821983751147356171").then((guild) => {
+                        guild.channels.resolveID(eventChannel).then((channel) => {
+                            channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!")
+                        }).catch((error) => console.log(error))
+                    }).catch((error) => console.log(error))
+                }
+                else if(currentAnswer == -1)
+                {
+                    for(var i = 0; i < eventAnswers.length; i++)
+                    {
+                        var points = 1000 - (50 * i);
+
+                        if(points < 50)
+                            points = 50;
+
+                        var found = false;
+
+                        for(var j = 0; j < eventScores.length; j++)
+                        {
+                            if(eventScores[j].userID == eventAnswers[i].userID)
+                            {
+                                found = true;
+                                eventScores[j].score += points;
+                            }
+                        }
+
+                        if(!found)
+                            eventScores.push({userID: eventAnswers[i].userID, score: points})
+                    }
+
+                    eventAnswers = [];
+
+                    client.guilds.fetch("821983751147356171").then((guild) => {
+                        guild.channels.resolveID(eventChannel).then((channel) => {
+                            channel.send("Time is up for this question!\n\Current Scores Array: " + eventScores)
+                        }).catch((error) => console.log(error))
+                    }).catch((error) => console.log(error))
+                }
+            }
+    });
+});
+
+var port = 6969;
+
+webhook.listen(port, function callback () {
+    console.log("server is listening on port " + port);
+});
