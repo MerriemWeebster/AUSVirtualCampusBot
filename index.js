@@ -691,7 +691,9 @@ var webhook = listener.createServer({
                             if(eventScores[j].userID == eventAnswers[i].userID)
                             {
                                 found = true;
-                                eventScores[j].score += points;
+
+                                if(eventAnswers[i].answer == currentAnswer)
+                                    eventScores[j].score += points;
                             }
                         }
 
