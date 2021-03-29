@@ -268,7 +268,7 @@ function removeUnverified()
 {
     client.guilds.fetch("821983751147356171").then((guild) => {
         guild.members.fetch().then((users) => {
-            var members = users.array();
+            const members = users.array();
             console.log("Fetched " + members.length + " members to check unverified")
             for(var i = 0; i < members.length; i++)
             {
@@ -289,12 +289,11 @@ function removeUnverified()
                         if((new Date()).getTime() - members[i].joinedAt.getTime() >= 86400000*7)
                         {
                             console.log("Kicked for inactivity: " + members[i].user.tag)
-                            const member = members[i];
-                            member.send("You have been removed from the server for not being verified after a week, please join again if you wish to be verified.").then(() => {
-                                member.kick("Inactive and unverified");
+                            members[i].send("You have been removed from the server for not being verified after a week, please join again if you wish to be verified.").then(() => {
+                                members[i].kick("Inactive and unverified");
                             }).catch((err) => {
                                 console.log(err)
-                                member.kick("Inactive and unverified");
+                                members[i].kick("Inactive and unverified");
                             })
                         }
                     }
