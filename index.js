@@ -433,7 +433,7 @@ client.on('message', msg => {
                     if(answered)
                         msg.reply("You have already answered this question.")
                     else
-                        eventAnswers.push({userID: message.author.id, answer: msg.content})
+                        eventAnswers.push({userID: msg.author.id, answer: msg.content})
                 }   
             }
             else
