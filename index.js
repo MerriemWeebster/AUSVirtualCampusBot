@@ -456,6 +456,9 @@ client.on('message', msg => {
             {
                 eventPlaying = false;
                 currentAnswer = 0;
+                prevAnswer = 0;
+                eventAnswers = [];
+                eventScores = [];
                 msg.reply("Event reset")
             }
 
@@ -670,7 +673,11 @@ var webhook = listener.createServer({
                 if(currentAnswer == 0)
                 {
                     if(!eventPlaying)
+                    {
+                        prevAnswer = 0;
+                        eventAnswers = [];
                         eventScores = [];
+                    }
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
@@ -687,6 +694,11 @@ var webhook = listener.createServer({
                         if(points < 50)
                             points = 50;
 
+                        if(eventAnswers[i].answer == prevAnswer)
+                            reduceIndex++;
+                        else
+                            points = 0;
+
                         var found = false;
 
                         for(var j = 0; j < eventScores.length; j++)
@@ -694,12 +706,7 @@ var webhook = listener.createServer({
                             if(eventScores[j].userID == eventAnswers[i].userID)
                             {
                                 found = true;
-
-                                if(eventAnswers[i].answer == prevAnswer)
-                                {
-                                    eventScores[j].score += points;
-                                    reduceIndex++;
-                                }
+                                eventScores[j].score += points;
                             }
                         }
 
