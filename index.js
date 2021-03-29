@@ -657,10 +657,13 @@ var webhook = listener.createServer({
 
                 if(currentAnswer == 0)
                 {
+                    console.log("0 mode")
                     if(!eventPlaying)
                         eventScores = [];
 
+                    console.log("Fetched Guild")
                     client.guilds.fetch("821983751147356171").then((guild) => {
+                        console.log("Fetched Channel")
                         guild.channels.resolveID(eventChannel).then((channel) => {
                             channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!")
                         }).catch((error) => console.log(error))
@@ -668,6 +671,8 @@ var webhook = listener.createServer({
                 }
                 else if(currentAnswer == -1)
                 {
+                    console.log("-1 mode")
+
                     for(var i = 0; i < eventAnswers.length; i++)
                     {
                         var points = 1000 - (50 * i);
