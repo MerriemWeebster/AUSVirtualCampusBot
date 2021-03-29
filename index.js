@@ -648,6 +648,8 @@ var webhook = listener.createServer({
             body = Buffer.concat(body).toString()
             if(body != [] && body !== undefined && body !== null)
             {
+                console.log(body)
+
                 var data = JSON.parse(body);
                 
                 currentAnswer = data.currrentAnswer;
