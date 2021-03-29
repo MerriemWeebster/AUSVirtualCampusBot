@@ -372,11 +372,11 @@ client.on('guildMemberAdd', (member) => {
     {
         var role = member.guild.roles.resolveID("822441807300001793");
         member.roles.add(role).catch(err => console.log(err));
-        member.send("Welcome back to the AUS Virtual Campus! Get your roles back in <#822446668288884776>.");
+        member.send("Welcome back to the AUS Virtual Campus! Get your roles back in <#822446668288884776>.").catch(err => console.log(err));
     }
     else
     {
-        member.send("Welcome to the AUS Virtual Campus! You can verify yourself here by sending your AUS ID! Examples: `b000XXXXX` `g000XXXXX`.");
+        member.send("Welcome to the AUS Virtual Campus! You can verify yourself here by sending your AUS ID! Examples: `b000XXXXX` `g000XXXXX`.").catch(err => console.log(err));
         var role = member.guild.roles.resolveID("822913697751760936");
         member.roles.add(role).catch(err => console.log(err));
     }
