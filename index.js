@@ -401,7 +401,7 @@ function monkeReply(msg)
     });
 }
 
-const eventChannel = "826107910383599687";
+const eventChannel = "826151147844665394";
 var eventAnswers = []
 
 client.on('message', msg => {
@@ -453,13 +453,24 @@ client.on('message', msg => {
                 msg.reply(`🏓Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
             }
 
-            if (msg.content.toLowerCase() === 'aus/endevent' && msg.author.id == "281876391535050762") 
+            if (msg.content.toLowerCase() === 'aus/startevent' && msg.channel.id == "822443774507614218") 
+            {
+                var category = msg.guild.channels.resolve(eventChannel).parent;
+                category.overwritePermissions([{id: "822441807300001793", allow: ['SEND_MESSAGES', 'CONNECT']}])
+                msg.reply("Event started")
+            }
+
+            if (msg.content.toLowerCase() === 'aus/endevent' && msg.channel.id == "822443774507614218") 
             {
                 eventPlaying = false;
                 currentAnswer = 0;
                 prevAnswer = 0;
                 eventAnswers = [];
                 eventScores = [];
+
+                var category = msg.guild.channels.resolve(eventChannel).parent;
+                category.overwritePermissions([{id: "822441807300001793", deny: ['SEND_MESSAGES', 'CONNECT']}])
+
                 msg.reply("Event reset")
             }
 
