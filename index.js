@@ -426,7 +426,7 @@ client.on('message', msg => {
 
                 if(answered)
                 {
-                    msg.reply("You have already answered this question.")
+                    msg.delete();
                 }
                 else
                 {
@@ -437,6 +437,7 @@ client.on('message', msg => {
                     else
                     {
                         eventAnswers.push({userID: msg.author.id, answer: msg.content})
+                        msg.react('✅');
                     }   
                 }
             }
