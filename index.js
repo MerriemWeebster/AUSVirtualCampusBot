@@ -681,7 +681,7 @@ var webhook = listener.createServer({
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
-                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!\n\nCurrent Scores: \n\n`Rank - User - Score`\n" + getLeaderboard(), {split: true})
+                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!")
 
                         if(!eventPlaying)
                             eventScores = [];
