@@ -200,9 +200,9 @@ function verifyStudent(studentID, code, userID)
                 client.guilds.fetch("821983751147356171").then((guild) => {
                     guild.members.fetch(userID).then((member) => {
                         var role = member.guild.roles.resolveID("822441807300001793");
-                        member.roles.add(role);
+                        member.roles.add(role).catch(err => console.log(err));
                         var unverifiedRole = member.guild.roles.resolveID("822913697751760936");
-                        member.roles.remove(unverifiedRole);
+                        member.roles.remove(unverifiedRole).catch(err => console.log(err));
                     }).catch((error) => console.log(error))
                 }).catch((error) => console.log(error))
             }
@@ -352,7 +352,7 @@ client.on('ready', () => {
                     if(addRole)
                     {
                         var role = members[i].guild.roles.resolveID("822913697751760936");
-                        members[i].roles.add(role);
+                        members[i].roles.add(role).catch(err => console.log(err));
                     }
                 }
             }
@@ -371,14 +371,14 @@ client.on('guildMemberAdd', (member) => {
     if(isVerifiedUser(member.id))
     {
         var role = member.guild.roles.resolveID("822441807300001793");
-        member.roles.add(role);
+        member.roles.add(role).catch(err => console.log(err));
         member.send("Welcome back to the AUS Virtual Campus! Get your roles back in <#822446668288884776>.");
     }
     else
     {
         member.send("Welcome to the AUS Virtual Campus! You can verify yourself here by sending your AUS ID! Examples: `b000XXXXX` `g000XXXXX`.");
         var role = member.guild.roles.resolveID("822913697751760936");
-        member.roles.add(role);
+        member.roles.add(role).catch(err => console.log(err));
     }
 });
 
