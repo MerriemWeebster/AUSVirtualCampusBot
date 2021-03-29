@@ -645,9 +645,10 @@ var webhook = listener.createServer({
         body.push(chunk);
     }).on('end', () => {
             body = Buffer.concat(body).toString()
+            console.log(body)
+
             if(body != [] && body !== undefined && body !== null)
             {
-                console.log(body)
 
                 var data = JSON.parse(body);
                 
