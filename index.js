@@ -424,7 +424,7 @@ client.on('message', msg => {
                     }
                 }
 
-                if(answered || msg.author.voice.channelID != "826151197601169408")
+                if(answered || msg.member.voice.channelID != "826151197601169408")
                 {
                     msg.delete();
                 }
