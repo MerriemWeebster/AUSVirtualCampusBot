@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "contentful-webhook-listener": "^1.0.4",
     "discord.js": "^12.5.1",
     "node-schedule": "^2.0.0",
     "nodemailer": "^6.5.0",
