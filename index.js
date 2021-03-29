@@ -643,6 +643,7 @@ client.login('ODIyNDM4NDY0MjcxOTQxNjQy.YFSRgg.uJucJgPtXxzjM5y6Wc_nDCZCGbA');
 
 var eventPlaying = false;
 var currentAnswer = 0;
+var prevAnswer = 0;
 
 var eventScores = [];
 
@@ -678,9 +679,10 @@ var webhook = listener.createServer({
                 }
                 else if(currentAnswer == -1)
                 {
+                    var reduceIndex = 0;
                     for(var i = 0; i < eventAnswers.length; i++)
                     {
-                        var points = 1000 - (50 * i);
+                        var points = 1000 - (50 * reduceIndex);
 
                         if(points < 50)
                             points = 50;
@@ -693,8 +695,11 @@ var webhook = listener.createServer({
                             {
                                 found = true;
 
-                                if(eventAnswers[i].answer == currentAnswer)
+                                if(eventAnswers[i].answer == prevAnswer)
+                                {
                                     eventScores[j].score += points;
+                                    reduceIndex++;
+                                }
                             }
                         }
 
@@ -709,6 +714,8 @@ var webhook = listener.createServer({
                         channel.send("Time is up for this question!\n\Current Scores Array: " + JSON.stringify(eventScores))
                     }).catch((error) => console.log(error))
                 }
+                else
+                    prevAnswer = data.currentAnswer;
             }
     });
 });
