@@ -402,7 +402,6 @@ function monkeReply(msg)
 }
 
 const eventChannel = "826107910383599687";
-
 var eventAnswers = []
 
 client.on('message', msg => {
@@ -411,7 +410,7 @@ client.on('message', msg => {
 
     if(msg.channel.guild != null)
     {
-        if(msg.channel.id == eventChannel && eventStart)
+        if(msg.channel.id == eventChannel && eventPlaying)
         {
             if(currentAnswer > 0)
             {
