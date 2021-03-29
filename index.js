@@ -681,7 +681,7 @@ var webhook = listener.createServer({
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
-                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!\n\nCurrent Scores: \n\n`User - Score`\n" + getLeaderboard(), {split: true})
+                        channel.send(eventPlaying ? "Guide: When the game starts, send your answers here as a number from 1-4 to match one of the answers shown in the stream. The faster you give the right answer, the more points you get!" : "The event has ended!\n\nCurrent Scores: \n\n`Rank - User - Score`\n" + getLeaderboard(), {split: true})
 
                         if(!eventPlaying)
                             eventScores = [];
@@ -722,7 +722,7 @@ var webhook = listener.createServer({
 
                     client.guilds.fetch("821983751147356171").then((guild) => {
                         var channel = guild.channels.resolve(eventChannel)
-                        channel.send("Time is up for this question!\n\nCurrent Scores: \n\n`User - Score`\n" + getLeaderboard(), {split: true})
+                        channel.send("Time is up for this question!\n\nCurrent Scores: \n\n`Rank - User - Score`\n" + getLeaderboard(), {split: true})
                     }).catch((error) => console.log(error))
                 }
                 else
@@ -749,7 +749,7 @@ function getLeaderboard()
 
     for(var i = 0; i < eventScores.length; i++)
     {
-        list = list + "<@" + eventScores[i].userID + "> - " + numberWithCommas(eventScores[i].score) + "\n";
+        list = list + (i + 1) + " - <@" + eventScores[i].userID + "> - " + numberWithCommas(eventScores[i].score) + "\n";
     }
 
     return list;
