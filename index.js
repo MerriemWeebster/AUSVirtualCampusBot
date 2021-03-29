@@ -645,10 +645,10 @@ var webhook = listener.createServer({
         body.push(chunk);
     }).on('end', () => {
             body = Buffer.concat(body).toString()
-            console.log(body)
 
             if(body != [] && body !== undefined && body !== null)
             {
+                console.log(body)
 
                 var data = JSON.parse(body);
                 
@@ -702,8 +702,8 @@ var webhook = listener.createServer({
     });
 });
 
-var port = 6969;
+var port = 2000;
 
 webhook.listen(port, function callback () {
-    console.log("server is listening on port " + port);
+    console.log("Server is listening on port " + port);
 });
