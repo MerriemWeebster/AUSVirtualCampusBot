@@ -414,7 +414,7 @@ client.on('message', msg => {
         {
             if(currentAnswer > 0)
             {
-                if(msg.content != "1" || msg.content != "2" || msg.content != "3" || msg.content != "4")
+                if(msg.content != "1" && msg.content != "2" && msg.content != "3" && msg.content != "4")
                 {
                     msg.reply("Please send a number from 1-4 only.")
                 }
