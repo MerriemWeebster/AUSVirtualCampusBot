@@ -424,7 +424,7 @@ client.on('message', msg => {
                     }
                 }
 
-                if(answered)
+                if(answered || msg.author.voice.channelID != "826151197601169408")
                 {
                     msg.delete();
                 }
@@ -460,7 +460,7 @@ client.on('message', msg => {
 
                 for(var i = 0; i < channels.length; i++)
                 {
-                    channels[i].overwritePermissions([{id: "822441807300001793", allow: ['SEND_MESSAGES', 'CONNECT', 'VIEW_CHANNEL']}, {id: "821983751147356171", deny: ['VIEW_CHANNEL']}])
+                    channels[i].overwritePermissions([{id: "822441807300001793", allow: ['SEND_MESSAGES', 'CONNECT', 'VIEW_CHANNEL']}, {id: "234395307759108106", allow: ['CONNECT', 'VIEW_CHANNEL']}, {id: "821983751147356171", deny: ['VIEW_CHANNEL']}])
                 }
                 
                 msg.reply("Event started")
