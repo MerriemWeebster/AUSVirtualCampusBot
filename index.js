@@ -566,28 +566,28 @@ client.on('message', msg => {
                                 }
                                 else
                                 {
-                                    msg.reply("Invalid code for `" + studentID + "`, please send the student ID once again without any commands to receive your code again. Examples: `b000XXXXX` `g000XXXXX`.");
+                                    msg.reply("Invalid code for `" + studentID + "`, please send the student ID once again without any commands to receive your code again. Examples: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
                                 }    
                             }
                         }
                         else
                         {
-                            msg.reply("Invalid student ID, ID should have one letter and 8 numbers. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                            msg.reply("Invalid student ID, ID should have one letter and 8 numbers. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
                         }
                     }
                     else
                     {
-                        msg.reply("Invalid student ID, in correct format. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                        msg.reply("Invalid student ID, in correct format. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
                     }
                 }
                 else
                 {
-                    msg.reply("Invalid student ID, incorrect length. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                    msg.reply("Invalid student ID, incorrect length. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
                 }
             }
             else
             {
-                msg.reply("Invalid command format. Example for a valid command: `verify your-student-id your-code`.");
+                msg.reply("Invalid command format. Example for a valid command: `verify your-student-id your-code`.", {files: ["Verify.png"]});
             }
         }
         else
@@ -632,35 +632,28 @@ client.on('message', msg => {
                             if(!added)
                             {
                                 studentData.push({studentID: studentID, userID: "", code: code});
-                                saveFile();
-
-                                if(mailStatus)
-                                    msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify your-student-id your-code`");
-                                else
-                                    msg.reply("You can only receive an email once every 5 minutes.");
+                                saveFile(); 
                             }
+                            
+                            if(mailStatus)
+                                msg.reply("A code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify your-student-id your-code`", {files: ["Verify.png"]});
                             else
-                            {
-                                if(mailStatus)
-                                    msg.reply("Your code has been sent to the email `" + studentID + "@aus.edu`, please reply here with the command `verify your-student-id your-code`");
-                                else
-                                    msg.reply("You can only receive an email once every 5 minutes.");
-                            }
+                                msg.reply("You can only receive an email once every 5 minutes.");
                         }
                     }
                     else
                     {
-                        msg.reply("Invalid student ID, ID should have one letter and 8 numbers. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                        msg.reply("Invalid student ID, ID should have one letter and 8 numbers. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
                     }
                 }
                 else
                 {
-                    msg.reply("Invalid student ID, in correct format. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                    msg.reply("Invalid student ID, in correct format. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
                 }
             }
             else
             {
-                msg.reply("Invalid student ID, incorrect length. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.");
+                msg.reply("Invalid student ID, incorrect length. Examples for a valid ID: `b000XXXXX` `g000XXXXX`.", {files: ["Verify.png"]});
             }
         }   
     }
